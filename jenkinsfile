@@ -2,19 +2,24 @@ pipeline {
     agent any
 
     stages {
-        stage('code-checkout') {
+        stage('Checkout') {
             steps {
-                echo 'success'
+                checkout([$class: 'GitSCM',
+                    branches: [[name: '*/main']],
+                    doGenerateSubmoduleConfigurations: false,
+                    extensions: [],
+                    userRemoteConfigs: [[url: 'git@github.com:Shanmugaram/aws-devopsclass.git', credentialsId: 'jenkins-ssh-key']]
+                ])
             }
         }
-        stage('build') {
+        stage('Build') {
             steps {
-                echo 'building success'
+                echo 'Building success'
             }
         }
         stage('Test') {
             steps {
-                echo 'testing success'
+                echo 'Testing success'
             }
         }
     }
